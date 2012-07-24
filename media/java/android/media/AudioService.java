@@ -530,6 +530,7 @@ public class AudioService extends IAudioService.Stub implements OnFinished {
             intentFilter.addAction(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);
         intentFilter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED);
         intentFilter.addAction(Intent.ACTION_DOCK_EVENT);
+        intentFilter.addAction(Intent.ACTION_HDMI_AUDIO_PLUG);
         intentFilter.addAction(Intent.ACTION_USB_AUDIO_ACCESSORY_PLUG);
         intentFilter.addAction(Intent.ACTION_USB_AUDIO_DEVICE_PLUG);
         intentFilter.addAction(Intent.ACTION_BOOT_COMPLETED);
@@ -4035,6 +4036,7 @@ public class AudioService extends IAudioService.Stub implements OnFinished {
                         }
                     }
                 }
+<<<<<<< HEAD
             } else if (action.equals(Intent.ACTION_HEADSET_PLUG)) {
                 state = intent.getIntExtra("state", 0);
                 if (state == 1) {
@@ -4045,6 +4047,11 @@ public class AudioService extends IAudioService.Stub implements OnFinished {
                     // Headset disconnected
                     adjustCurrentStreamVolume();
                 }
+=======
+            } else if (action.equals(Intent.ACTION_HDMI_AUDIO_PLUG)) {
+                state = intent.getIntExtra("state", 0);
+                handleDeviceConnection((state == 1), AudioSystem.DEVICE_OUT_AUX_DIGITAL, "");
+>>>>>>> 898e083... Enable HDMI Audio (Stereo) in frameworks/base
             } else if (action.equals(Intent.ACTION_USB_AUDIO_ACCESSORY_PLUG) ||
                            action.equals(Intent.ACTION_USB_AUDIO_DEVICE_PLUG)) {
                 state = intent.getIntExtra("state", 0);
