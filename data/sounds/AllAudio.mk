@@ -27,7 +27,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/notifications/Alya.ogg:system/media/audio/notifications/Alya.ogg \
     $(LOCAL_PATH)/notifications/Arcturus.ogg:system/media/audio/notifications/Arcturus.ogg \
     $(LOCAL_PATH)/notifications/Capella.ogg:system/media/audio/notifications/Capella.ogg \
-    $(LOCAL_PATH)/notifications/Castor.ogg:system/media/audio/notifications/Castor.ogg \
     $(LOCAL_PATH)/notifications/CetiAlpha.ogg:system/media/audio/notifications/CetiAlpha.ogg \
     $(LOCAL_PATH)/notifications/Mira.ogg:system/media/audio/notifications/Mira.ogg \
     $(LOCAL_PATH)/notifications/Pollux.ogg:system/media/audio/notifications/Pollux.ogg \
