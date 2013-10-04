@@ -4951,6 +4951,11 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
+    @Override
+    public void reboot(String reason) {
+        ShutdownThread.reboot(mContext, reason, false);
+    }
+
     // Called by window manager policy.  Not exposed externally.
     @Override
     public InputChannel monitorInput(String inputChannelName) {
