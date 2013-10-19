@@ -188,12 +188,6 @@ public class MobileDataStateTracker implements NetworkStateTracker {
                     return;
                 }
 
-                // Assume this isn't a provisioning network.
-                mNetworkInfo.setIsConnectedToProvisioningNetwork(false);
-                if (DBG) {
-                    log("Broadcast received: " + intent.getAction() + " apnType=" + apnType);
-                }
-
                 int oldSubtype = mNetworkInfo.getSubtype();
                 int newSubType = TelephonyManager.getDefault().getNetworkType();
                 String subTypeName = TelephonyManager.getDefault().getNetworkTypeName();
@@ -287,8 +281,6 @@ public class MobileDataStateTracker implements NetworkStateTracker {
                     }
                     return;
                 }
-                // Assume this isn't a provisioning network.
-                mNetworkInfo.setIsConnectedToProvisioningNetwork(false);
                 String reason = intent.getStringExtra(PhoneConstants.FAILURE_REASON_KEY);
                 String apnName = intent.getStringExtra(PhoneConstants.DATA_APN_KEY);
                 if (DBG) {
@@ -660,3 +652,4 @@ public class MobileDataStateTracker implements NetworkStateTracker {
         Slog.e(TAG, s);
     }
 }
+
