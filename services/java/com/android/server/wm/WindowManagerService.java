@@ -4993,16 +4993,16 @@ public class WindowManagerService extends IWindowManager.Stub
         mInputManager.switchKeyboardLayout(deviceId, direction);
     }
 
-    // Called by window manager policy.  Not exposed externally.
+    // Called by window manager policy. Not exposed externally.
     @Override
     public void shutdown(boolean confirm) {
-        ShutdownThread.shutdown(getUiContext(), confirm);
+        ShutdownThread.shutdown(mContext, confirm);
     }
 
-    // Called by window manager policy.  Not exposed externally.
+    // Called by window manager policy. Not exposed externally.
     @Override
     public void rebootSafeMode(boolean confirm) {
-        ShutdownThread.rebootSafeMode(getUiContext(), confirm);
+        ShutdownThread.rebootSafeMode(mContext, confirm);
     }
 
     @Override
@@ -5011,6 +5011,12 @@ public class WindowManagerService extends IWindowManager.Stub
             throw new SecurityException("Requires FILTER_EVENTS permission");
         }
         mInputManager.setInputFilter(filter);
+    }
+
+    // Called by window manager policy. Not exposed externally.
+    @Override
+    public void reboot() {
+        ShutdownThread.reboot(getUiContext(), null, true);
     }
 
     public void setCurrentUser(final int newUserId) {

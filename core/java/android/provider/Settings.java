@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2410,6 +2410,13 @@ public final class Settings {
          * @hide
          */
         public static final String POINTER_SPEED = "pointer_speed";
+        
+        /**
+         * Whether the power menu reboot menu is enabled
+         * @hide
+         */
+         
+        public static final String POWER_MENU_REBOOT_ENABLED = "power_menu_reboot_enabled";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -2477,7 +2484,8 @@ public final class Settings {
             SIP_CALL_OPTIONS,
             SIP_RECEIVE_CALLS,
             POINTER_SPEED,
-            VIBRATE_WHEN_RINGING
+            VIBRATE_WHEN_RINGING,
+            POWER_MENU_REBOOT_ENABLED
         };
 
         // Settings moved to Settings.Secure
@@ -4196,6 +4204,12 @@ public final class Settings {
          * @hide
          */
         public static final String DIALPAD_AUTOCOMPLETE = "dialpad_autocomplete";
+        
+        /**
+         * Whether to include options in power menu for rebooting into recovery or bootloader	
+	     * @hide	
+		 */	
+		 public static final String ADVANCED_REBOOT = "advanced_reboot";
 
         /**
          * This are the settings to be backed up.
@@ -4240,7 +4254,8 @@ public final class Settings {
             MOUNT_UMS_PROMPT,
             MOUNT_UMS_NOTIFY_ENABLED,
             UI_NIGHT_MODE,
-            DIALPAD_AUTOCOMPLETE
+            DIALPAD_AUTOCOMPLETE,
+            ADVANCED_REBOOT
         };
 
         /**

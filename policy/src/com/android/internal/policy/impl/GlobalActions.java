@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,8 +108,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mHasTelephony;
     private boolean mHasVibrator;
     private final boolean mShowSilentToggle;
-
-    private static int rebootIndex = 0;
 
     /**
      * @param context everything needs a context :(
@@ -266,11 +264,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     mWindowManagerFuncs.shutdown(true);
                 }
 
-                public boolean onLongPress() {
-                    mWindowManagerFuncs.rebootSafeMode(true);
-                    return true;
-                }
-
                 public boolean showDuringKeyguard() {
                     return true;
                 }
@@ -279,28 +272,32 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     return true;
                 }
             });
-
+            
         // next: reboot
-        mItems.add(
-                new SinglePressAction(
-                        com.android.internal.R.drawable.ic_lock_reboot,
-                        com.android.internal.R.string.reboot) {
+        // only shown if enabled, enabled by default
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_MENU_REBOOT_ENABLED, 0) == 0) {
+            mItems.add(
+                new SinglePressAction(R.drawable.ic_lock_reboot, R.string.global_action_reboot) {
+                    public void onPress() {
+                        mWindowManagerFuncs.reboot();
+                    }
 
-                    @Override
+                    public boolean onLongPress() {
+                        mWindowManagerFuncs.rebootSafeMode(true);
+                        return true;
+                    }
+
                     public boolean showDuringKeyguard() {
                         return true;
                     }
 
-                    @Override
                     public boolean showBeforeProvisioning() {
                         return true;
                     }
+                });         
+        }
 
-                    @Override
-                    public void onPress() {
-                        createRebootDialog().show();
-                    }
-                });
 
         // next: airplane mode
         mItems.add(mAirplaneModeOn);
@@ -353,7 +350,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     }
                 });
         }
-
+        
         // last: silent mode
         if (mShowSilentToggle) {
             mItems.add(mSilentModeAction);
@@ -955,8 +952,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     }
 
     /**
-     * Change the airplane mode system setting
-     */
+* Change the airplane mode system setting
+*/
     private void changeAirplaneModeSystemSetting(boolean on) {
         Settings.Global.putInt(
                 mContext.getContentResolver(),
@@ -969,40 +966,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         if (!mHasTelephony) {
             mAirplaneState = on ? ToggleAction.State.On : ToggleAction.State.Off;
         }
-    }
-
-    private AlertDialog createRebootDialog() {
-        final String[] rebootOptions = mContext.getResources().getStringArray(R.array.reboot_options);
-        final String[] rebootReasons = mContext.getResources().getStringArray(R.array.reboot_values);
-
-        AlertDialog d = new AlertDialog.Builder(mContext)
-                .setSingleChoiceItems(rebootOptions, 0,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                rebootIndex = which;
-                            }
-                        })
-                .setNegativeButton(android.R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                .setPositiveButton(R.string.reboot, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mWindowManagerFuncs.reboot(rebootReasons[rebootIndex]);
-                    }
-                }).create();
-
-        d.getListView().setItemsCanFocus(true);
-        d.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
-
-        return d;
     }
 
     private static final class GlobalActionsDialog extends Dialog implements DialogInterface {

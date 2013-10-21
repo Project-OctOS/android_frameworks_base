@@ -4138,13 +4138,4 @@
     <string name="app_not_found">No application found to handle this action</string>
     <string name="revoke">Revoke</string>
 
-    <!-- Reboot -->
-    <string name="reboot">Reboot</string>
-    <!-- Reboot recovery option -->
-    <string name="reboot_recovery">Recovery</string>
-    <!-- Reboot recovery option -->
-    <string name="reboot_download">Download</string>
-    <!-- Rebooting message -->
-    <string name="reboot_progress">Your device is rebooting</string>
-
 </resources>
